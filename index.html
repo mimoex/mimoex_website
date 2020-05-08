@@ -9,6 +9,8 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 	<link rel="stylesheet" href="/live2d/css/live2d.css" />
 	<link rel="canonical" href="https://getbootstrap.com/docs/4.1/examples/starter-template/"> </head>
+	<link href="https://getbootstrap.com/docs/4.1/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://getbootstrap.com/docs/4.1/examples/starter-template/starter-template.css" rel="stylesheet">
 <body>
 	<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top"> <a class="navbar-brand" href="https://mimoex.net/">Mimoex</a> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -24,8 +26,10 @@
             </a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 						<a class="dropdown-item" href="mailto:mimoex@protonmail.com">E-Mail</a>
+						<a class="dropdown-item" href="https://keybase.io/mimoex" target="_blank">Keybase</a>
 						<button class="dropdown-item" type="button" data-toggle="modal" data-target="#exampleModalLong">OpenPGP</button>
 						<button class="dropdown-item" type="button" data-toggle="modal" data-target="#signal">Signal</button>
+						<a class="dropdown-item" href="https://github.com/mimoex" target="_blank">Github</a>
 						<button class="dropdown-item" type="button" data-toggle="modal" data-target="#no_log">ログについて</button>
 					</div>
 				</li>
@@ -45,6 +49,8 @@
 			<form class="form-inline my-2 my-lg-0"> <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"> <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> </form>
 		</div>
 	</nav>
+
+
 	<!-- OpenPGP Signing Key -->
 	<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
 		<div class="modal-dialog" role="document">
@@ -137,7 +143,7 @@ rR33sicNeI+tum5SthH0mtucrg==
 		  </button> </div>
 				<div class="modal-body">
 					<p>きみ可愛いね、いくつなの？どこ住み？てか、Signalやってる？笑</p>
-					<p><a href="https://www.signal.org/ja/" target="_blank"><img src="icon_48.png" alt="TAG index" border="0"></a></p>
+					<p><a href="https://www.signal.org/ja/" target="_blank"><img src="/img/icon_signal.png" alt="TAG index" border="0"></a></p>
 				</div>
 				<div class="modal-footer"> <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button> </div>
 			</div>
@@ -173,6 +179,23 @@ rR33sicNeI+tum5SthH0mtucrg==
 				</div>
 			</div>
 		</div>
+
+		<main role="main" class="container">
+		<p class="lead">
+
+		<?php 
+    		$ipv4 = '^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?).){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$';
+    		if (preg_match('/' . $ipv4 . '/', $_SERVER['REMOTE_ADDR']) ) {
+				echo '<br>あなたはIPv4でアクセスしています<br>';
+				echo '<img src="https://img.shields.io/badge/-IPv4-lightgrey" alt="ipv4" border="0" />';
+    		}else{
+        		echo '<br>あなたはIPv6でアクセスしています<br>';
+        		echo '<img src="https://img.shields.io/badge/-IPv6-brightgreen" alt="ipv6" border="0" />';
+    	}
+		 ?>
+		</p>
+
+	</main>
 
 	<!-- Live2D -->
 	<footer class="footer">
