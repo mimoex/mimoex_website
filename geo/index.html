@@ -4,6 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <title>Mimoex HTML5 Geolocation API tester</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <style>
     #map {
       width: 100%;
@@ -11,21 +12,71 @@
     }
   </style>
 
+  <link rel="canonical" href="https://getbootstrap.com/docs/4.1/examples/starter-template/"> 
+
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.0/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.3.0/dist/leaflet.js"></script>
 </head>
 
 <body>
+	<a id="skippy" class="sr-only sr-only-focusable" href="#content">
+		<div class="container">
+		  <span class="skiplink-text">Skip to main content</span>
+		</div>
+	  </a>
+
+	<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top"> <a class="navbar-brand" href="/">Mimoex</a> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+		<div class="collapse navbar-collapse" id="navbarsExampleDefault">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item"> <a class="nav-link" href="https://www.mimoex.net/">Blog</a> </li>
+				<li class="nav-item"> <a class="nav-link" href="https://stream.mimoex.net/?action=stream">インコ(7:00-19:00)</a> </li>
+				<li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tools</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="/live2d.html">Live2D</a>
+						<a class="dropdown-item" href="/geo/index.html">GeoAPI Checker</a>
+						<a class="dropdown-item" href="/draw/index.html">Draw</a>
+					</div>
+				<li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Contact
+            </a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<h6 class="dropdown-header">Get in Touch</h6>
+						<a class="dropdown-item" href="mailto:mimoex@protonmail.com">E-Mail</a>
+						<a class="dropdown-item" href="https://keybase.io/mimoex" target="_blank">Keybase</a>
+						<a class="dropdown-item" href="https://github.com/mimoex" target="_blank">Github</a>
+						<h6 class="dropdown-header">PGP</h6>
+						<button class="dropdown-item" type="button" data-toggle="modal" data-target="#exampleModalLong">OpenPGP</button>
+						<h6 class="dropdown-header">Donations</h6>
+						<a class="dropdown-item" href="/donate-bitcoin/index.html" target="_blank">BTC</a>
+						<h6 class="dropdown-header">etc...</h6>
+						<button class="dropdown-item" type="button" data-toggle="modal" data-target="#signal">Signal</button>
+					</div>
+				</li>
+			</ul>
+			<?php 
+    		$ipv4 = '^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?).){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$';
+    		if (preg_match('/' . $ipv4 . '/', $_SERVER['REMOTE_ADDR']) ) {
+				echo '<span class="badge badge-secondary">IPv4</span>';
+    		}else{
+        		echo '<span class="badge badge-success">IPv6</span>';
+    	}
+		 ?>
+		</div>
+	</nav>
+<div class="container">
   <h1>Mimoex HTML5 Geolocation API tester</h1>
   <p>HTML5のGeoAPIを用いて居場所を検出します。</p>
   <p>GPSが搭載されていないデスクトップPCでもある程度の座標を検出できます。無線LANで接続すると精度の高い結果が表示されます。</p>
-  <p>最近のブラウザだと、場所検出ボタンを押すとブラウザが位置情報を許可するか問われます。</p>
+  <p>モバイルルータやモバイル回線を用いたテザリングでの動作はよくわかりません。多分ISPの本拠地が表示されると思われる…
+  <p>最近のブラウザだと、場所検出ボタンを押すとブラウザが位置情報を許可するか問われますので、やってみたい場合は許可してください。</p>
   <p><b>※座標データはサーバへ送信されません。 ブラウザ内だけで完結するようなJavascriptで動いてます。</b></p>
 
-  <button onclick="getLocation()">場所検出</button>
+  <button type="button" class="btn btn-warning" onclick="getLocation()">場所検出</button>
 
   <p id="geodata"></p>
-  <div class="container">
+ 
     <div id="map"></div>
   </div>
   <script>
@@ -72,12 +123,17 @@
           x.innerHTML = "リクエストはタイムアウトしました。"
           break;
         case error.UNKNOWN_ERROR:
-          x.innerHTML = "なんかよくわからんエラーが発生した。"
+          x.innerHTML = "なんかよくわからんエラーが発生したよ。"
           break;
       }
     }
   </script>
 
+
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </body>
 
 </html>
